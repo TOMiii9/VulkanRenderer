@@ -22,6 +22,9 @@ public:
 
 	Vec3		m_position;
 	Quat		m_orientation;
-
+	Vec3		m_linearVelocity;
+	float		m_invMass;
 	Shape *		m_shape;
+
+	void ApplyImpulseLinear(const Vec3 &impulse);
 };
