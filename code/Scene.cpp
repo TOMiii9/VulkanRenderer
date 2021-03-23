@@ -60,18 +60,6 @@ void Scene::Initialize() {
 	m_bodies.push_back( body );
 }
 
-
-bool Intersect(const Body *body_a, const Body *body_b) {
-	const Vec3 ab = body_a->m_position - body_b->m_position;
-	const float radiusAB = ((ShapeSphere*)body_a->m_shape)->m_radius + ((ShapeSphere*)body_b->m_shape)->m_radius;
-	const float length_sqr = ab.GetLengthSqr();
-
-	if (length_sqr <= (radiusAB * radiusAB)) {
-		return true;
-	}
-	return false;
-}
-
 /*
 ====================================================
 Scene::Update
@@ -79,8 +67,7 @@ Scene::Update
 */
 void Scene::Update( const float dt_sec ) {
 	// accelerate
-	for (Body &body : m_bodies) {
-		
+	for (Body &body : m_bodies) {		
 		// gravity -> impulse
 		float mass = 10.f / body.m_invMass;
 		Vec3 gravity_impulse = Vec3(0,0,-10) * mass * dt_sec;
@@ -96,9 +83,9 @@ void Scene::Update( const float dt_sec ) {
 				continue;
 			}
 
-			if (Intersect(body_a, body_b)) {
-				body_a->m_linearVelocity.Zero();
-				body_b->m_linearVelocity.Zero();
+			contact_t contact;
+			if (Intersect(body_a, body_b, contact)) {
+				ResolveContact(contact);
 			}
 		}
 	}

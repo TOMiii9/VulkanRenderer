@@ -493,8 +493,8 @@ void Application::MainLoop() {
 		if ( runPhysics ) {
 			int startTime = GetTimeMicroseconds();
 			for ( int i = 0; i < 2; i++ ) {
-				m_scene->Update( dt_sec * 0.5f );
-			}
+				m_scene->Update( dt_sec * 0.5f );				
+			}		
 			int endTime = GetTimeMicroseconds();
 
 			dt_us = (float)endTime - (float)startTime;
@@ -505,7 +505,7 @@ void Application::MainLoop() {
 			avgTime = ( avgTime * float( numSamples ) + dt_us ) / float( numSamples + 1 );
 			numSamples++;
 
-			printf( "frame dt_ms: %.2f %.2f %.2f\n", avgTime * 0.001f, maxTime * 0.001f, dt_us * 0.001f );
+			//printf( "frame dt_ms: %.2f %.2f %.2f\n", avgTime * 0.001f, maxTime * 0.001f, dt_us * 0.001f );
 		}
 
 		// Draw the Scene
